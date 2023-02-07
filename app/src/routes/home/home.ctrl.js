@@ -10,6 +10,9 @@ const output = {
     login : (req, res)=>{         
         res.render("home/login");
     },
+    register : (req, res) =>{
+        res.render("home/register")
+    }
 };
 
 
@@ -48,6 +51,11 @@ const process = {
         // //     msg : "로그인에 실패하셨습니다",
         // // });
     },
+    register: (req,res) => {
+        const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
+        const response = user.register();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
+        return res.json(response);
+    }
 };
 
 module.exports = { // 오브젝트 타입으로도 내보낼 수 있음 

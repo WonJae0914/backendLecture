@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/js/home/login.js" defer></script>
+    <script src="/js/home/register.js" defer></script>
     <link rel="stylesheet" href="/css/home/login.css">
     <title>Document</title>
 </head>
 <body>
     <div class="login-page">
-        <div class="form">
+        <div class="form"> <!--자동 서브밋-->
           <form class="login-form">
             <input id="id" type="text" placeholder="아이디"/>
+            <input id="name" type="text" placeholder="이름"/>
             <input id="psword" type="password" placeholder="비밀번호"/>
-            <p id="button">LOGIN</p>
-            <p class="message">Not registered? <a href="/register">Create an account</a></p>
+            <input id="confirm-psword" type="password" placeholder="비밀번호확인"/>
+            <p id="button">SIGN UP</p>
+            <p class="message">Already registered? <a href="/login">login</a></p>
           </form>
         </div>
       </div>
