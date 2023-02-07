@@ -18,9 +18,9 @@ const output = {
 
 // 프론트에서 요청 받은 값 서버로 보낼 함수
 const process = {
-    login : (req, res) =>{
+    login : async(req, res) =>{
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
-        const response = user.login();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
+        const response = await user.login();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
         return res.json(response);
         // return res.json(response);
 
@@ -51,7 +51,7 @@ const process = {
         // //     msg : "로그인에 실패하셨습니다",
         // // });
     },
-    register: (req,res) => {
+     register: (req,res) => {
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
         const response = user.register();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
         return res.json(response);
