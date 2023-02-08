@@ -1,6 +1,6 @@
 "use strict"
 
-const fs = require("fs").promises // json파일에 접근해서 해당 파일을 읽을 수 있도록 filesystem을 불러와야 함. .promises하면 promise로 가져옴.
+const db= require("../config/db") // db모듈 불러오기
 
 class UserStorage { // static 선언 시 new 연산자를 선언하지 않아도 클래스 내의 값들을 불러올 수 있다. 
                     // 클래스 내에서 변수 선언시 선언자 필요없음
@@ -31,38 +31,19 @@ class UserStorage { // static 선언 시 new 연산자를 선언하지 않아도
 
      // 회원가입
     static getUsers(isAll, ...fields){
-        return fs                                
-        .readFile("./src/databases/users.json") 
-        .then((data) => { // 버퍼데이터로 받아옴 -> JSON데이터로 변환해줘야 함         
-            return this.#getUsers(data, isAll, fields);
-        }) 
-        .catch(console.error);                
+                
     };
 
-    //로그인
+    //로그인 : db에 접근하기 -> 유저정보 반환
     static getUserInfo(id){
-        return fs                                // readFile : 데이터(2진수)를 16진수로 보여줌
-         .readFile("./src/databases/users.json") // promise를 반환하면 then에 접근가능. 에러는 catch
-         .then((data) => {                // then : 로직이 성공했을 때 실행되는 것
-            console.log(JSON.parse(data));
-             return (this.#getUserInfo(data, id));
-         }) 
-         .catch(console.error);                  // catch : 로직이 에러가 났을 때 실행되는 것
+        db.query("select * from users", (err, data) => {
+            console.log(data);
+        });
      }
 
     // 회원가입 정보를 db에 저장하는 로직 
     static async save(userInfo){
-        // db에 추가 할 데이터 불러오는 과정
-        const users = await this.getUsers(true);                          // 변수 users에 db에 추가 할 데이터 담김
-        if(users.id.includes(userInfo.id)){                               // client가 입력한 id가 db에 있는지 비교
-           throw "이미 존재하는 아이디입니다.";                             // throw 처리해야 User.js에서 try catch구문에서 catch에러쪽으로 에러가 던져진다.
-        };
-        users.id.push(userInfo.id);
-        users.name.push(userInfo.name);
-        users.psword.push(userInfo.psword);
-        // db에 데이터 추가
-        fs.writeFile("./src/databases/users.json", JSON.stringify(users));  // writeFile("저장경로", "저장할데이터")
-        return { success : true };
+    
     };
 };
 module.exports = UserStorage;
