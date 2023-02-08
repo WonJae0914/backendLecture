@@ -1,8 +1,5 @@
 "use strict"
 
-// 프론트에서 아이디, 비밀번호 입력
-// 아이디, 비밀번호를 서버로 전달 
-
 const id = document.querySelector("#id"), 
   psword = document.querySelector("#psword"),
 loginBtn = document.querySelector("#button");
@@ -16,11 +13,6 @@ function login (){ // login 클릭 시 서버로 전달할 함수
     };
 
     // 프런트에서 데이터를 전달하는 과정 시작
-
-    // req 데이터를 JSON.stringify로 바꿨을 때 값 비교
-    // console.log(req); 
-    // console.log(JSON.stringify(req)); // 문자열로 바뀌어있음.
-    
     // fetch(데이터를 전달할 경로, {전달할 데이터}). 전달할 데이터는 오브젝트 형태로 보내줘야 한다(제이슨 방식의 데이터)
     fetch("/login", {
         method : "POST",                        // POST 방식으로 데이터를 보낼 것을 선언
@@ -29,9 +21,8 @@ function login (){ // login 클릭 시 서버로 전달할 함수
         },      
         body : JSON.stringify(req),             // 키값 body로 전달할 데이터를 보내야 하는데 JSON 타입으로 보내줘야 한다.
                                                 // stringify는 req 데이터를 문자열로 바꿔주는 메소드다
-    // 데이터가 서버로 전달이 되는데 이러한 데이터를 서버에서 받으려면 /login 이라는 경로, POST 방식으로 데이터를 받을 수 있는 API가 마련이 되어 있어야 한다. 
-    // 해당 데이터 파일은 routes 폴더에 생성 해주면 된다. 
-
+        
+   
     // 프런트에서 데이터를 전달하는 과정 끝
 
     // 서버에서 전달한 데이터를 프런트에서 다시 받는 과정 시작

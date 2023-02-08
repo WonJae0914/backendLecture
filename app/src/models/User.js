@@ -21,10 +21,14 @@ class User{
         return { success : false, msg : "존재하지 않는 아이디입니다"} // 아이디도 틀릴때 리턴
     }
 
-    register(){
+    async register(){
         const client = this.body;
-        const response = UserStorage.save(client); // 유저스토리지에 세이브라는 메소드를 호출하여 저장될 수 있도록 해줌
-        return response;
+        try {
+            const response = await UserStorage.save(client); // 유저스토리지에 세이브라는 메소드를 호출하여 저장될 수 있도록 해줌
+            return response;
+        } catch(err){
+            return { success : false, msg : err };
+        }
     }
 
 }
