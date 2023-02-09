@@ -7,7 +7,7 @@ dotenv.config();
   // express 모듈 불러오기
 const app = express();   
 
-//라우팅        
+//라우팅 연결    
 const home = require("./src/routes/home");   // routes/home 폴더의 내용들을 불러오기
 
 // app 세팅

@@ -22,7 +22,6 @@ function login (){ // login 클릭 시 서버로 전달할 함수
         body : JSON.stringify(req),             // 키값 body로 전달할 데이터를 보내야 하는데 JSON 타입으로 보내줘야 한다.
                                                 // stringify는 req 데이터를 문자열로 바꿔주는 메소드다
         
-   
     // 프런트에서 데이터를 전달하는 과정 끝
 
     // 서버에서 전달한 데이터를 프런트에서 다시 받는 과정 시작
