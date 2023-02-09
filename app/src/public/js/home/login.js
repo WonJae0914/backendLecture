@@ -7,6 +7,9 @@ loginBtn = document.querySelector("#button");
 loginBtn.addEventListener("click", login);
 
 function login (){ // login 클릭 시 서버로 전달할 함수 
+    if(!id.value) return alert("아이디를 입력해주세요");
+    if(!psword.value) return alert("비밀번호를 입력해주세요");
+    
     const req = {  // 서버로 요청할 값을 req 라는 변수에 담기 위해 선언
         id : id.value, // 서버로 전달할 id값
         psword : psword.value, // 서버로 전달할 psword값
@@ -32,6 +35,7 @@ function login (){ // login 클릭 시 서버로 전달할 함수
                 alert(res.msg)   // success가 true 일때   
                 location.href = "/"; // '/' 주소값으로 이동
             }else{
+                if(res.err) return alert(res.err);
                 alert(res.msg);      // 로그인 실패지 메세지 
             }
         })

@@ -1,16 +1,20 @@
 "use strict"
 
 const User = require("../../models/User");
+const logger = require("../../config/logger");
 
 // 단순히 해당 페이지를 렌더링 해주는 페이지
 const output = {
-    home : (req, res)=>{         
+    home : (req, res)=>{       
+        logger.info(`GET / 200 "홈 화면으로 이동"`);  
         res.render("home/index");           
     },
-    login : (req, res)=>{         
+    login : (req, res)=>{        
+        logger.info(`GET /login 200 "로그인 화면으로 이동"`);   
         res.render("home/login");
     },
     register : (req, res) =>{
+        logger.info(`GET /register 200 "회원가입 화면으로 이동"`);  
         res.render("home/register")
     },
 };
@@ -22,6 +26,12 @@ const process = {
 
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
         const response = await user.login();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
+        if(response.err) 
+            logger.error( `POST /login 200 Response : "success : ${response.success}, msg : ${response.err}"`)
+        else 
+            logger.info(
+                `POST /login 200 Response : "success : ${response.success}, msg : ${response.msg}"`
+            );
         return res.json(response);
         // return res.json(response);
 
@@ -55,6 +65,11 @@ const process = {
      register : async (req,res) => {
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
         const response = await user.register();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
+        if(response.err) 
+            logger.error( `POST /register 200 Response : "success : ${response.success}, msg : ${response.err}"`);
+        else logger.info(
+            `POST /register 200 Response : "success : ${response.success}, msg : ${response.msg}"`
+        );
         return res.json(response);
     }
 };

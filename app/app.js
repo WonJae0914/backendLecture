@@ -3,7 +3,6 @@
 //모듈
 const express = require("express");   
 const dotenv = require("dotenv");
-const morgan = require('morgan');
 const accessLogStream = require('./src/config/log')
 
   // express 모듈 불러오기
@@ -23,8 +22,6 @@ app.use(express.static(`${__dirname}/src/public`));    // 노드에서 개발 �
 
 app.use(express.json());                               // body 값을 parsing 해오기 위한 미들웨어 
 app.use(express.urlencoded({ extended : true}));       // URL을 통해 전달되는 데이터에 한글, 공백 등과 같은 문자가 포함될 경우 제대로 인식되지 않는 문제 해결
-app.use(morgan('dev'));
-app.use(morgan('common', { stream : accessLogStream }));
 
 app.use("/", home)                      // use : "/"로 home 값을 보내줌. 가장 하단에 위치해야 함. 
 

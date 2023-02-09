@@ -1,12 +1,11 @@
 const { createLogger, transports, format } = require("winston");
 const { combine, timestamp, colorize, json, simple, printf, label } = format;
-
 const printFormat = printf(({timestamp,label, level, message}) => {
     return `${timestamp} [${label}] ${level} : ${message}`;
  });
 
-
 const printLogFormat = {
+
     file : combine(
     label({
         label : "백엔드 맛보기",
@@ -14,11 +13,12 @@ const printLogFormat = {
     timestamp({
       format : "YYYY-MM-DD HH:mm:dd"
     }),
+
     printFormat
     ),
     console : combine(
         colorize(), //
-        simple()
+        simple(),
     )
 };
 const opts = {
@@ -41,5 +41,9 @@ const logger = createLogger({
 if(process.env.NODE_ENV !== "production"){
     logger.add(opts.console);
 };
+
+logger.stream = {
+    write : (message) => logger.info(message),
+}
 
 module.exports = logger;

@@ -31,6 +31,7 @@ function register (){
             alert(res.msg)   
             location.href = "/"; 
         }else{
+            if(res.err) return alert(res.err);
             alert(res.msg);       
         }
     })
