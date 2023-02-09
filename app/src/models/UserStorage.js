@@ -7,7 +7,7 @@ class UserStorage {
     //로그인 : db에 접근하기 -> 유저정보 반환(promise로 반환해야됨!)
     static getUserInfo(id){
         return new Promise((resolve, reject) => {
-            const query = "select * from ab WHERE id = ? ";
+            const query = "select * from users WHERE id = ? ";
             db.query(query, [id], (err, data) => {
                 if(err) return reject(`${err}`);
                 else resolve(data[0]);
@@ -16,7 +16,7 @@ class UserStorage {
      };
     // 회원가입 정보를 db에 저장하는 로직 
     static save(userInfo){
-        const query = "insert into usesrs(id, name, psword) values(?, ?, ?)";
+        const query = "insert into users(id, name, psword) values(?, ?, ?)";
         const salt = 10;
         
         return new Promise((resolve, reject) => {

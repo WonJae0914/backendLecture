@@ -3,7 +3,6 @@
 //모듈
 const express = require("express");   
 const dotenv = require("dotenv");
-const accessLogStream = require('./src/config/log')
 
   // express 모듈 불러오기
 const app = express();  

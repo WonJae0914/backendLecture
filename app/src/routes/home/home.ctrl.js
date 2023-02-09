@@ -6,71 +6,45 @@ const logger = require("../../config/logger");
 // 단순히 해당 페이지를 렌더링 해주는 페이지
 const output = {
     home : (req, res)=>{       
-        logger.info(`GET / 200 "홈 화면으로 이동"`);  
+        logger.info(`GET / 304 "홈 화면으로 이동"`);  
         res.render("home/index");           
     },
+
     login : (req, res)=>{        
-        logger.info(`GET /login 200 "로그인 화면으로 이동"`);   
+        logger.info(`GET /login 304 "로그인 화면으로 이동"`);   
         res.render("home/login");
     },
+
     register : (req, res) =>{
-        logger.info(`GET /register 200 "회원가입 화면으로 이동"`);  
+        logger.info(`GET /register 304 "회원가입 화면으로 이동"`);  
         res.render("home/register")
     },
 };
 
-
 // 프론트에서 요청 받은 값 서버로 보낼 함수
 const process = {
     login : async(req, res) =>{
-
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
         const response = await user.login();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
-        if(response.err) 
-            logger.error( `POST /login 200 Response : "success : ${response.success}, msg : ${response.err}"`)
-        else 
-            logger.info(
-                `POST /login 200 Response : "success : ${response.success}, msg : ${response.msg}"`
-            );
-        return res.json(response);
-        // return res.json(response);
-
-        // const id = req.body.id,
-        //   psword = req.body.psword;
-
-        // const users = UserStorage.getUsers("id","psword"); // 아이디, 패스워드, 이름 중 아이디 패스워드만 불러오고 싶음 
-
-    
-        // const response = {};
-        // //유저 아이디, 패스워드 검증하는 로직
-        // if (users.id.includes(id)) { // 프런트에서 전달한 id가 users.id에 (나중엔 서버) 있으면
-        //     const idx = users.id.indexOf(id); // users.id의 인덱스를 가져오고
-        //     if(users.psword[idx] === psword) { // 프런트에서 전달한 psword가 idx가 같으면
-        //         response.success = true;
-        //         return res.json(response);
-        //         // return res.json({            // 로그인 성공했는지 여부를 res 해줌. json 객체로 전달해야 하니 object 형태로 전달
-        //         //     success : true,          // 로그인 성공하면 sucess : true 라는 오브젝트를 제이슨으로 만들어서 프런트로 res한다.
-        //         };
-        //     };
-    
-        // // // 실패했을 때 (if문에서 성공했을때 return으로 빠져나오기 때문에 실패할 때 코드는 return값으로 처리)
-        // response.success = false;
-        // response.msg="로그인에 실패하셨습니다";
-        // return res.json(response);
-        // // return res.json({
-        // //     success : false,
-        // //     msg : "로그인에 실패하셨습니다",
-        // // });
+        const url = {
+            method : "POST",
+            path : "/login",
+            status : response.err ? 400 : 200,
+        }
+        log(response, url);
+        return res.status(url.status).json(response);
     },
+
      register : async (req,res) => {
         const user = new User(req.body); // 프론트에서 입력한 값을 파라미터로 넘김
         const response = await user.register();   // user.~~를 불러오면 req한 body값을 항상 가지고 다님.
-        if(response.err) 
-            logger.error( `POST /register 200 Response : "success : ${response.success}, msg : ${response.err}"`);
-        else logger.info(
-            `POST /register 200 Response : "success : ${response.success}, msg : ${response.msg}"`
-        );
-        return res.json(response);
+        const url = {
+            method : "POST",
+            path : "/register",
+            status : response.err ? 409 : 201,
+        }
+        log(response, url);
+        return res.status(url.status).json(response);
     }
 };
 
@@ -78,3 +52,12 @@ module.exports = { // 오브젝트 타입으로도 내보낼 수 있음
    output,
    process,     // key : value(=key) 가 된다. 
 }
+
+const log = (response, url) =>{
+    if(response.err) {
+        logger.error(`${url.method}${url.path} ${url.status} Response : ${response.success} ${response.err}"`)
+    } else {
+        logger.info(`${url.method}${url.path} ${url.status} Response : ${response.success} ${response.msg || "" }"`);
+    };
+        
+};
