@@ -21,6 +21,7 @@ class UserStorage {
         const salt = 10;
         
         return new Promise((resolve, reject) => {
+                    // 암호화하여 DB에 저장
                     bcrypt.hash(userInfo.psword, salt, function(err, hash) {
                     if(err) return next(err);
                     userInfo.psword = hash;

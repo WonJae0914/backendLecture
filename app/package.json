@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "app-root-path": "^3.1.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "crypto": "^1.0.1",
@@ -8,8 +9,10 @@
     "env": "^0.0.2",
     "express": "^4.18.2",
     "mongodb": "^5.0.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "scheduler": "^0.23.0"
+    "scheduler": "^0.23.0",
+    "winston": "^3.8.2"
   },
   "name": "practice",
   "version": "1.0.0",
